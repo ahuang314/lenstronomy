@@ -242,7 +242,11 @@ class TestData(object):
         assert len(error_map) == n
 
         kernel_point_source = np.ones((2, 2))
-        psf = PSF(psf_type="PIXEL", kernel_point_source=kernel_point_source, kernel_point_source_normalisation=False)
+        psf = PSF(
+            psf_type="PIXEL",
+            kernel_point_source=kernel_point_source,
+            kernel_point_source_normalisation=False,
+        )
         kernel_odd = psf.kernel_point_source
         assert len(kernel_odd) == 3
         kernel_odd_new = kernel_util.kernel_make_odd(kernel_point_source)
