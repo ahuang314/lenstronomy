@@ -96,8 +96,7 @@ def center_kernel(kernel, iterations=20):
 
 @export
 def kernel_make_odd(kernel_even):
-    """De-shifts a even kernel (with all for central pixels the same brightness to an
-    odd kernel.
+    """Turns an even kernel into an odd kernel with quadratic interpolation
 
     :param kernel_even: n x n kernel with n even, centered
     :return: even kernel with n+1 x n+1 centered
@@ -112,12 +111,12 @@ def kernel_make_odd(kernel_even):
     _kernel = np.zeros((n_row + 2, n_col + 2))
     _kernel[1:-1, 1:-1] = kernel_even
 
-    # creates new odd sized kernel by linear interpolation
+    # creates new odd sized kernel by interpolation
     xrange = np.arange(n_col + 1) + 0.5
     yrange = np.arange(n_row + 1) + 0.5
     x_grid, y_grid = np.meshgrid(xrange, yrange)
 
-    return ndimage.map_coordinates(_kernel, coordinates=[y_grid, x_grid], order=1)
+    return ndimage.map_coordinates(_kernel, coordinates=[y_grid, x_grid], order=2)
 
 
 @export
