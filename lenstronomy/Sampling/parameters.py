@@ -291,6 +291,7 @@ class Param(object):
         # Required for JAXtronomy to initialize Image2SourceMapping class with JAXtronomy profiles
         if _jax:
             from jaxtronomy.Util import class_creator as class_creator_jax
+
             _class_creator = class_creator_jax
         else:
             _class_creator = class_creator
