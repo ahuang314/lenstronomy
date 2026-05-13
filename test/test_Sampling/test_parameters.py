@@ -180,7 +180,6 @@ class TestParam(object):
         self.param_class._jax = True
         kwargs_return = self.param_class.args2kwargs(args)
 
-
     def test_get_cosmo(self):
         kwargs_model = {
             "lens_model_list": ["SPEP"],
