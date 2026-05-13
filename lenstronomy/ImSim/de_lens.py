@@ -90,8 +90,7 @@ def marginalisation_const(M_inv):
 
 @export
 def _cond_inv(M):
-    """
-    check for condition to attempt inverting matrix (or solving for linear solution
+    """Check for condition to attempt inverting matrix (or solving for linear solution.
 
     :param M: matrix to be inverted or solved for
     :return: bool, True: solve for it. False: do not attempt to solve it
