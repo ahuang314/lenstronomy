@@ -654,6 +654,34 @@ class TestParam(object):
         )
         self.param_class.print_setting()
 
+    def test_jax_flag(self):
+        kwargs_model = {
+            "lens_model_list": ["EPL"],
+            "source_light_model_list": ["GAUSSIAN"],
+            "lens_light_model_list": ["SERSIC"],
+            "point_source_model_list": ["LENSED_POSITION"],
+            "multi_plane": False,
+        }
+        kwargs_param = {
+            "num_point_source_list": [2],
+        }
+        kwargs_fixed_lens = [{"gamma": 1.9}]
+        kwargs_fixed_source = [{"sigma": 0.1, "center_x": 0.2, "center_y": 0.2}]
+        kwargs_fixed_ps = [{"ra_image": [-1, 1], "dec_image": [-1, 1]}]
+        kwargs_fixed_lens_light = [{}]
+        kwargs_fixed_cosmo = [{}]
+        self.param_class = Param(
+            kwargs_model,
+            kwargs_fixed_lens=kwargs_fixed_lens,
+            kwargs_fixed_source=kwargs_fixed_source,
+            kwargs_fixed_lens_light=kwargs_fixed_lens_light,
+            kwargs_fixed_ps=kwargs_fixed_ps,
+            kwargs_fixed_special=kwargs_fixed_cosmo,
+            _jax=True,
+            **kwargs_param
+        )
+        self.param_class.print_setting()
+
 
 class TestRaise(unittest.TestCase):
     def test_raise(self):
