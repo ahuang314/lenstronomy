@@ -158,6 +158,7 @@ class Param(object):
         distance_ratio_sampling=False,
         cosmology_sampling=False,
         solver_param_module=None,
+        _jax=False,
     ):
         """
 
@@ -238,6 +239,7 @@ class Param(object):
         :param cosmology_model: str, name of the cosmology model to use for
         :param solver_param_module: a class that performs conversions update_kwargs, extract_array, and add_fixed_lens
          for the Solver4Point class with the solver_type = 'CUSTOM' option
+        :param _jax: bool, flag that is set whenever this class is called from JAXtronomy
         """
 
         self._lens_model_list = kwargs_model.get("lens_model_list", [])
@@ -286,13 +288,20 @@ class Param(object):
         else:
             num_lens_planes = len(list(set(self._lens_redshift_list)))
 
+        # Required for JAXtronomy to initialize Image2SourceMapping class with JAXtronomy profiles
+        if _jax:
+            from jaxtronomy.Util import class_creator as class_creator_jax
+
+            _class_creator = class_creator_jax
+        else:
+            _class_creator = class_creator
         (
             self._lens_model_class,
             self._source_model_class,
             _,
             _,
             _,
-        ) = class_creator.create_class_instances(all_models=True, **kwargs_model)
+        ) = _class_creator.create_class_instances(all_models=True, **kwargs_model)
         self._image2SourceMapping = Image2SourceMapping(
             lens_model=self._lens_model_class, source_model=self._source_model_class
         )
@@ -379,7 +388,7 @@ class Param(object):
         except:
             self._num_images = 0
         self._solver_type = solver_type
-        if self._solver_type == "NONE":
+        if self._solver_type == "NONE" or self._solver_type is None:
             self._solver = False
         else:
             self._solver = True
