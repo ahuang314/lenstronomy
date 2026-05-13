@@ -568,12 +568,16 @@ class Param(object):
         i = 0
         if jax is False:
             args = np.atleast_1d(args)
+            impose_bound = True
+        # Turn off bound checks for kwargs_special when being called from JAXtronomy
+        else:
+            impose_bound = False
 
         kwargs_lens, i = self.lensParams.get_params(args, i)
         kwargs_source, i = self.sourceParams.get_params(args, i)
         kwargs_lens_light, i = self.lensLightParams.get_params(args, i)
         kwargs_ps, i = self.pointSourceParams.get_params(args, i)
-        kwargs_special, i = self.specialParams.get_params(args, i, impose_bound=True)
+        kwargs_special, i = self.specialParams.get_params(args, i, impose_bound=impose_bound)
         kwargs_extinction, i = self.extinctionParams.get_params(args, i)
         kwargs_tracer_source, i = self.tracerSourceParams.get_params(args, i)
         self._update_lens_model(kwargs_special)
