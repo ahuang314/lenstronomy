@@ -73,6 +73,7 @@ class TestLensModel(object):
     def test_use_jax(self):
         try:
             import jax
+
             jax.config.update("jax_enable_x64", True)
             from jaxtronomy.LensModel.Profiles.nfw import NFW as NFW_jax
             from jaxtronomy.LensModel.Profiles.tnfw import TNFW as TNFW_jax
