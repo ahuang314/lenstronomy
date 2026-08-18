@@ -123,7 +123,8 @@ class LensModelExtensions(object):
                     grid_r = np.hypot(grid_x, grid_y / q).ravel()
                 else:
                     y_ = np.array(grid_y / axis_ratio, dtype=float)
-                    grid_r = np.hypot(grid_x, y_).ravel()
+                    x_ = np.array(grid_x, dtype=float)
+                    grid_r = np.hypot(x_, y_).ravel()
 
             flux_array = np.zeros_like(grid_x_0)
             step = step_size * grid_radius_arcsec
@@ -539,9 +540,10 @@ class LensModelExtensions(object):
             v11, v12, v21, v22 = v[0, 0], v[0, 1], v[1, 0], v[1, 1]
             w1, w2 = w[0], w[1]
         else:
+            len_x = len(np.atleast_1d(x))
             w1, w2, v11, v12, v21, v22 = (
-                np.empty(len(x), dtype=float),
-                np.empty(len(x), dtype=float),
+                np.empty(len_x, dtype=float),
+                np.empty(len_x, dtype=float),
                 np.empty_like(x),
                 np.empty_like(x),
                 np.empty_like(x),
