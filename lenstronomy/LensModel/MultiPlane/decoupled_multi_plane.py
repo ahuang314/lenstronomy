@@ -66,12 +66,13 @@ class MultiPlaneDecoupled(MultiPlane):
             y-component of the deflection angle at (x,y)
         :param z_interp_list: a list of redshifts corresponding to the
             alpha_x_interp_list and alpha_y_interp_list entries
-        :param perturber_model_list: list of deflector models that are treated as perturbations
-            (subtract shear and convergence contributions at ra_0/dec_0)
+        :param perturber_model_list: list of deflector models that are treated as
+            perturbations (subtract shear and convergence contributions at ra_0/dec_0)
         :type perturber_model_list: None or list of bools
-        :param ra_0: RA coordinate for which perturber models have zero shear and convergence contributions
-        :param dec_0: DEC coordinate for which perturber models have zero shear and convergence contributions
-            (usually center of the main deflector)
+        :param ra_0: RA coordinate for which perturber models have zero shear and
+            convergence contributions
+        :param dec_0: DEC coordinate for which perturber models have zero shear and
+            convergence contributions (usually center of the main deflector)
         :param use_jax: bool, if True, uses deflector profiles from jaxtronomy. Can also
             be a list of bools, selecting which models in the lens_model_list to use
             from jaxtronomy
