@@ -116,15 +116,14 @@ class LensModelExtensions(object):
 
                 rotation_angle = np.arctan(v[1] / v[0]) - np.pi / 2
                 grid_x, grid_y = util.rotate(grid_x_0, grid_y_0, rotation_angle)
-
+                x_ = np.array(grid_x, dtype=float)
                 if axis_ratio == 0:
                     sort = np.argsort(_w)
                     q = _w[sort[0]] / _w[sort[1]]
-                    grid_r = np.hypot(grid_x, grid_y / q).ravel()
+                    y_ = np.array(grid_y / q, dtype=float)
                 else:
                     y_ = np.array(grid_y / axis_ratio, dtype=float)
-                    x_ = np.array(grid_x, dtype=float)
-                    grid_r = np.hypot(x_, y_).ravel()
+                grid_r = np.hypot(x_, y_).ravel()
 
             flux_array = np.zeros_like(grid_x_0)
             step = step_size * grid_radius_arcsec
@@ -549,7 +548,7 @@ class LensModelExtensions(object):
                 np.empty_like(x),
                 np.empty_like(x),
             )
-            for i in range(len(x)):
+            for i in range(len_x):
                 A = np.array([[1 - f_xx[i], f_xy[i]], [f_yx[i], 1 - f_yy[i]]])
                 w, v = np.linalg.eig(A)
                 w1[i], w2[i] = w[0], w[1]
