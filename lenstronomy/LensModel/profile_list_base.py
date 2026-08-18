@@ -239,7 +239,10 @@ class ProfileListBase(object):
                     )
                     lensmodel_class = imported_classes[index]
             if perturber_model_list[i] is True:
-                from lenstronomy.LensModel.Profiles.perturber_model import PerturberModel
+                from lenstronomy.LensModel.Profiles.perturber_model import (
+                    PerturberModel,
+                )
+
                 lensmodel_class = PerturberModel(lensmodel_class, ra_0, dec_0)
             func_list.append(lensmodel_class)
         return func_list

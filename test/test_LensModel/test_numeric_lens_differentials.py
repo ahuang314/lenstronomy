@@ -192,7 +192,14 @@ class TestNumericsProfile(object):
         self.assert_differentials(lens_model, kwargs)
 
     def test_hessian(self):
-        kwargs = {"f_xx": 0.1, "f_yy": -0.1, "f_xy": 0.1, "f_yx": 0.1, "ra_0": 10, "dec_0": 10}
+        kwargs = {
+            "f_xx": 0.1,
+            "f_yy": -0.1,
+            "f_xy": 0.1,
+            "f_yx": 0.1,
+            "ra_0": 10,
+            "dec_0": 10,
+        }
         lens_model = ["HESSIAN"]
         self.assert_differentials(lens_model, kwargs)
 
@@ -442,10 +449,13 @@ class TestNumericsProfile(object):
 
     def test_perturber_model(self):
 
-        lensModel = LensModel(lens_model_list=["SIS"], perturber_model_list=[True], ra_0=10, dec_0=10)
+        lensModel = LensModel(
+            lens_model_list=["SIS"], perturber_model_list=[True], ra_0=10, dec_0=10
+        )
         kwargs_sis = {"theta_E": 1, "center_x": 0, "center_y": 0}
-        self.assert_differentials(lens_model=lensModel, kwargs=kwargs_sis, potential=True)
-
+        self.assert_differentials(
+            lens_model=lensModel, kwargs=kwargs_sis, potential=True
+        )
 
     def test_multipole(self):
         kwargs = {"m": 4, "a_m": 0.05, "phi_m": 0.1, "center_x": 0.0, "center_y": 0.0}

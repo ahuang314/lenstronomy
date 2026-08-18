@@ -1,15 +1,12 @@
-
 from lenstronomy.LensModel.Profiles.base_profile import LensProfileBase
 from lenstronomy.LensModel.Profiles.constant_shift import Shift
 from lenstronomy.LensModel.Profiles.hessian import Hessian
 
 
 class PerturberModel(LensProfileBase):
-    """
-    class to use a lens Profile and subtract shear and convergence contribution such that at specific point there
-    are only higher-order contributions.
+    """Class to use a lens Profile and subtract shear and convergence contribution such
+    that at specific point there are only higher-order contributions."""
 
-    """
     def __init__(self, profile, ra_0, dec_0):
         """
 
@@ -32,11 +29,21 @@ class PerturberModel(LensProfileBase):
 
         f_ = self._profile.function(x, y, **kwargs)
         alpha_x, alpha_y = self._profile.derivatives(self._ra_0, self._dec_0, **kwargs)
-        f_xx, f_xy, f_yx, f_yy = self._profile.hessian(self._ra_0, self._dec_0, **kwargs)
+        f_xx, f_xy, f_yx, f_yy = self._profile.hessian(
+            self._ra_0, self._dec_0, **kwargs
+        )
 
         f_shift = self._shift.function(x, y, alpha_x=alpha_x, alpha_y=alpha_y)
-        f_hessian = self._hessian.function(x, y, f_xx=f_xx, f_yy=f_yy, f_xy=f_xy, f_yx=f_yx,
-                                           ra_0=self._ra_0, dec_0=self._dec_0)
+        f_hessian = self._hessian.function(
+            x,
+            y,
+            f_xx=f_xx,
+            f_yy=f_yy,
+            f_xy=f_xy,
+            f_yx=f_yx,
+            ra_0=self._ra_0,
+            dec_0=self._dec_0,
+        )
 
         return f_ - f_shift - f_hessian
 
@@ -50,11 +57,23 @@ class PerturberModel(LensProfileBase):
         """
         f_x, f_y = self._profile.derivatives(x, y, **kwargs)
         alpha_x, alpha_y = self._profile.derivatives(self._ra_0, self._dec_0, **kwargs)
-        f_xx, f_xy, f_yx, f_yy = self._profile.hessian(self._ra_0, self._dec_0, **kwargs)
+        f_xx, f_xy, f_yx, f_yy = self._profile.hessian(
+            self._ra_0, self._dec_0, **kwargs
+        )
 
-        f_x_shift, f_y_shift = self._shift.derivatives(x, y, alpha_x=alpha_x, alpha_y=alpha_y)
-        f_x_hessian, f_y_hessian = self._hessian.derivatives(x, y, f_xx=f_xx, f_yy=f_yy, f_xy=f_xy, f_yx=f_yx,
-                                           ra_0=self._ra_0, dec_0=self._dec_0)
+        f_x_shift, f_y_shift = self._shift.derivatives(
+            x, y, alpha_x=alpha_x, alpha_y=alpha_y
+        )
+        f_x_hessian, f_y_hessian = self._hessian.derivatives(
+            x,
+            y,
+            f_xx=f_xx,
+            f_yy=f_yy,
+            f_xy=f_xy,
+            f_yx=f_yx,
+            ra_0=self._ra_0,
+            dec_0=self._dec_0,
+        )
 
         f_x_tot = f_x - f_x_shift - f_x_hessian
         f_y_tot = f_y - f_y_shift - f_y_hessian
@@ -70,9 +89,13 @@ class PerturberModel(LensProfileBase):
         """
         f_xx, f_xy, f_yx, f_yy = self._profile.hessian(x, y, **kwargs)
         alpha_x, alpha_y = self._profile.derivatives(self._ra_0, self._dec_0, **kwargs)
-        f_xx0, f_xy0, f_yx0, f_yy0 = self._profile.hessian(self._ra_0, self._dec_0, **kwargs)
+        f_xx0, f_xy0, f_yx0, f_yy0 = self._profile.hessian(
+            self._ra_0, self._dec_0, **kwargs
+        )
 
-        f_xx_shift, f_xy_shift, f_yx_shift, f_yy_shift = self._shift.hessian(x, y, alpha_x=alpha_x, alpha_y=alpha_y)
+        f_xx_shift, f_xy_shift, f_yx_shift, f_yy_shift = self._shift.hessian(
+            x, y, alpha_x=alpha_x, alpha_y=alpha_y
+        )
 
         f_xx_tot = f_xx - f_xx_shift - f_xx0
         f_xy_tot = f_xy - f_xy_shift - f_xy0

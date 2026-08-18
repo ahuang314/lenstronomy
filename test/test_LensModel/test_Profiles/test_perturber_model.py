@@ -3,12 +3,12 @@ from lenstronomy.LensModel.Profiles.sis import SIS
 import numpy.testing as npt
 
 
-class TestPerturberModel():
+class TestPerturberModel:
 
     def setup_method(self):
         self._sis = SIS()
         self.ra0 = 10
-        self.dec0 =5
+        self.dec0 = 5
         self._model = PerturberModel(profile=self._sis, ra_0=self.ra0, dec_0=self.dec0)
 
     def test_offset(self):
@@ -28,5 +28,3 @@ class TestPerturberModel():
         f = self._model.function(self.ra0, self.dec0, **kwargs_lens)
         f_sis = self._sis.function(self.ra0, self.dec0, **kwargs_lens)
         npt.assert_almost_equal(f, f_sis, decimal=10)
-
-
