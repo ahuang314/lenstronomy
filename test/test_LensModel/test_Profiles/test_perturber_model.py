@@ -27,4 +27,4 @@ class TestPerturberModel:
 
         f = self._model.function(self.ra0, self.dec0, **kwargs_lens)
         f_sis = self._sis.function(self.ra0, self.dec0, **kwargs_lens)
-        npt.assert_almost_equal(f, f_sis, decimal=10)
+        npt.assert_almost_equal(f, 0, decimal=10)

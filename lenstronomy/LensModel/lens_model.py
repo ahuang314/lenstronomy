@@ -192,6 +192,9 @@ class LensModel(object):
                     num_z_interp=num_z_interp,
                     profile_kwargs_list=profile_kwargs_list,
                     use_jax=use_jax,
+                    perturber_model_list=perturber_model_list,
+                    ra_0=ra_0,
+                    dec_0=dec_0,
                     **kwargs_multiplane_model
                 )
                 self.type = "MultiPlaneDecoupled"
