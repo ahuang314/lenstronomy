@@ -532,8 +532,9 @@ class LensModelExtensions(object):
         :param kwargs_lens: lens model keyword arguments
         :return: radial stretch, tangential stretch
         """
+
         f_xx, f_xy, f_yx, f_yy = self._lensModel.hessian(x, y, kwargs_lens, diff=diff)
-        if isinstance(x, int) or isinstance(x, float):
+        if isinstance(x, int) or isinstance(x, float) or isinstance(x, complex):
             A = np.array([[1 - f_xx, f_xy], [f_yx, 1 - f_yy]])
             w, v = np.linalg.eig(A)
             v11, v12, v21, v22 = v[0, 0], v[0, 1], v[1, 0], v[1, 1]
