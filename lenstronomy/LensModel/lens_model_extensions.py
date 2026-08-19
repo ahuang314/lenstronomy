@@ -537,7 +537,12 @@ class LensModelExtensions(object):
         if isinstance(x, int) or isinstance(x, float):
             A = np.array([[1 - f_xx, f_xy], [f_yx, 1 - f_yy]])
             w, v = np.linalg.eig(A)
-            v11, v12, v21, v22 = np.real(v[0, 0]), np.real(v[0, 1]), np.real(v[1, 0]), np.real(v[1, 1])
+            v11, v12, v21, v22 = (
+                np.real(v[0, 0]),
+                np.real(v[0, 1]),
+                np.real(v[1, 0]),
+                np.real(v[1, 1]),
+            )
             w1, w2 = np.real(w[0]), np.real(w[1])
         else:
             len_x = len(np.atleast_1d(x))
