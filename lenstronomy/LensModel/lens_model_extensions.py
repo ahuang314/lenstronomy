@@ -534,11 +534,11 @@ class LensModelExtensions(object):
         """
 
         f_xx, f_xy, f_yx, f_yy = self._lensModel.hessian(x, y, kwargs_lens, diff=diff)
-        if isinstance(x, int) or isinstance(x, float) or isinstance(x, complex):
+        if isinstance(x, int) or isinstance(x, float):
             A = np.array([[1 - f_xx, f_xy], [f_yx, 1 - f_yy]])
             w, v = np.linalg.eig(A)
-            v11, v12, v21, v22 = v[0, 0], v[0, 1], v[1, 0], v[1, 1]
-            w1, w2 = w[0], w[1]
+            v11, v12, v21, v22 = np.real(v[0, 0]), np.real(v[0, 1]), np.real(v[1, 0]), np.real(v[1, 1])
+            w1, w2 = np.real(w[0]), np.real(w[1])
         else:
             len_x = len(np.atleast_1d(x))
             w1, w2, v11, v12, v21, v22 = (
@@ -552,6 +552,8 @@ class LensModelExtensions(object):
             for i in range(len_x):
                 A = np.array([[1 - f_xx[i], f_xy[i]], [f_yx[i], 1 - f_yy[i]]])
                 w, v = np.linalg.eig(A)
+                w = np.real(w)
+                v = np.real(v)
                 w1[i], w2[i] = w[0], w[1]
                 v11[i], v12[i], v21[i], v22[i] = v[0, 0], v[0, 1], v[1, 0], v[1, 1]
         return w1, w2, v11, v12, v21, v22
