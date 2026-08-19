@@ -140,6 +140,9 @@ class ProfileListBase(object):
         profile_kwargs_list=None,
         lens_redshift_list=None,
         z_source_convention=None,
+        perturber_model_list=None,
+        ra_0=0,
+        dec_0=0,
         use_jax=False,
     ):
         """
@@ -148,6 +151,12 @@ class ProfileListBase(object):
         :param profile_kwargs_list: list of dicts, keyword arguments used to initialize profile classes
             in the same order of the lens_model_list. If any of the profile_kwargs are None, then that
             profile will be initialized using default settings.
+        :param perturber_model_list: list of deflector models that are treated as perturbations
+            (subtract shear and convergence contributions at ra_0/dec_0)
+        :type perturber_model_list: None or list of bools
+        :param ra_0: RA coordinate for which perturber models have zero shear and convergence contributions
+        :param dec_0: DEC coordinate for which perturber models have zero shear and convergence contributions
+            (usually center of the main deflector)
         :param use_jax: bool, if True, uses deflector profiles from jaxtronomy.
             Can also be a list of bools, selecting which models in the lens_model_list to use from jaxtronomy
         """
@@ -156,6 +165,9 @@ class ProfileListBase(object):
             profile_kwargs_list=profile_kwargs_list,
             lens_redshift_list=lens_redshift_list,
             z_source_convention=z_source_convention,
+            perturber_model_list=perturber_model_list,
+            ra_0=ra_0,
+            dec_0=dec_0,
             use_jax=use_jax,
         )
         self._num_func = len(self.func_list)
@@ -172,12 +184,17 @@ class ProfileListBase(object):
         profile_kwargs_list=None,
         lens_redshift_list=None,
         z_source_convention=None,
+        perturber_model_list=None,
+        ra_0=0,
+        dec_0=0,
         use_jax=False,
     ):
         if lens_redshift_list is None:
             lens_redshift_list = [None] * len(lens_model_list)
         if profile_kwargs_list is None:
             profile_kwargs_list = [{} for _ in range(len(lens_model_list))]
+        if perturber_model_list is None:
+            perturber_model_list = [False] * len(lens_model_list)
 
         # use_jax can be either a bool or list of bools to select specific models to be imported from jaxtronomy
         # If it's a bool, convert to list of bools
@@ -221,7 +238,12 @@ class ProfileListBase(object):
                         (lens_type, profile_kwargs_list[i])
                     )
                     lensmodel_class = imported_classes[index]
+            if perturber_model_list[i] is True:
+                from lenstronomy.LensModel.Profiles.perturber_model import (
+                    PerturberModel,
+                )
 
+                lensmodel_class = PerturberModel(lensmodel_class, ra_0, dec_0)
             func_list.append(lensmodel_class)
         return func_list
 
