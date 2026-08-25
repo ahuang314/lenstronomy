@@ -1388,6 +1388,9 @@ class ModelBandPlot(ModelBand):
         font_size=None,
         source_add=False,
         lens_light_add=False,
+        k_source=None,
+        k_lens_light=None,
+        k_point_source=None,
         kwargs_colorbar: Optional[plot_util.ColorBarKwargs] = {},
         kwargs_title: Optional[plot_util.TitleKwargs] = {},
         kwargs_scale_bar: Optional[plot_util.ScaleBarKwargs] = {},
@@ -1411,6 +1414,9 @@ class ModelBandPlot(ModelBand):
         :param lens_light_add: If True, includes the lens light in the plot
             from the plot
         :type lens_light_add: bool
+        :param k_source: int or list or tuple of ints, indicating which source light models to include
+        :param k_lens_light: int or list or tuple of ints, indicating which lens light models to include
+        :param k_point_source: int or list or tuple of ints, indicating which point source models to include
         :param label: Label for the colorbar
         :type label: str
         :param kwargs_title: keyword arguments for the title, see :class:`~lenstronomy.Plots.plot_util.TitleKwargs`. Set to None to exclude this element from the plot.
@@ -1436,6 +1442,9 @@ class ModelBandPlot(ModelBand):
             source_add=source_add,
             lens_light_add=lens_light_add,
             point_source_add=point_source_add,
+            k_source=k_source,
+            k_lens_light=k_lens_light,
+            k_point_source=k_point_source,
         )
 
         kwargs_matshow.setdefault("cmap", "cubehelix")

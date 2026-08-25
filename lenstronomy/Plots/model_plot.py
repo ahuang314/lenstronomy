@@ -782,6 +782,9 @@ class ModelPlot(object):
         point_source_add=False,
         source_add=False,
         lens_light_add=False,
+        k_source=None,
+        k_lens_light=None,
+        k_point_source=None,
         font_size=None,
         kwargs_colorbar: Optional[plot_util.ColorBarKwargs] = {},
         kwargs_title: Optional[plot_util.TitleKwargs] = {},
@@ -808,6 +811,9 @@ class ModelPlot(object):
         :param lens_light_add: If True, includes the lens light in the plot
             from the plot
         :type lens_light_add: bool
+        :param k_source: int or list or tuple of ints, indicating which source light models to include
+        :param k_lens_light: int or list or tuple of ints, indicating which lens light models to include
+        :param k_point_source: int or list or tuple of ints, indicating which point source models to include
         :param kwargs_title: keyword arguments for the title, see :class:`~lenstronomy.Plots.plot_util.TitleKwargs`. Set to None to exclude this element from the plot.
         :type kwargs_title: dict
         :param kwargs_scale_bar: keyword arguments for the scale bar, see :class:`~lenstronomy.Plots.plot_util.ScaleBarKwargs`. Set to None to exclude this element from the plot.
@@ -826,6 +832,9 @@ class ModelPlot(object):
             font_size=font_size,
             source_add=source_add,
             lens_light_add=lens_light_add,
+            k_source=k_source,
+            k_lens_light=k_lens_light,
+            k_point_source=k_point_source,
             kwargs_colorbar=kwargs_colorbar,
             kwargs_title=kwargs_title,
             kwargs_scale_bar=kwargs_scale_bar,
