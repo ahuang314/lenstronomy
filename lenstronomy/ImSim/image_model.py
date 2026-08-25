@@ -603,6 +603,9 @@ class ImageModel(object):
         source_add=True,
         lens_light_add=True,
         point_source_add=True,
+        k_source=None,
+        k_lens_light=None,
+        k_point_source=None,
     ):
         """Make an image with a realisation of linear parameter values "param".
 
@@ -624,6 +627,9 @@ class ImageModel(object):
         :param source_add: if True, compute source, otherwise without
         :param lens_light_add: if True, compute lens light, otherwise without
         :param point_source_add: if True, add point sources, otherwise without
+        :param k_source: int or list or tuple of ints, indicating which source light models to include
+        :param k_lens_light: int or list or tuple of ints, indicating which lens light models to include
+        :param k_point_source: int or list or tuple of ints, indicating which point source models to include
         :return: 2d array of surface brightness pixels of the simulation
         """
         self.update_pixel_grid_coordinates(
@@ -639,6 +645,7 @@ class ImageModel(object):
                 kwargs_special=kwargs_special,
                 unconvolved=unconvolved,
                 apply_primary_beam=apply_primary_beam,
+                k=k_source,
             )
         if lens_light_add is True:
             model += ImageModel.lens_surface_brightness(
@@ -646,6 +653,7 @@ class ImageModel(object):
                 kwargs_lens_light,
                 unconvolved=unconvolved,
                 apply_primary_beam=apply_primary_beam,
+                k=k_lens_light,
             )
         if point_source_add is True:
             model += ImageModel.point_source(
@@ -655,6 +663,7 @@ class ImageModel(object):
                 kwargs_special=kwargs_special,
                 unconvolved=unconvolved,
                 apply_primary_beam=apply_primary_beam,
+                k=k_point_source,
             )
         return model
 
